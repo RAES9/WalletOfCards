@@ -8,9 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController, WalletDelegate {
+class ViewController: UIViewController, WalletDelegate{
     var cardsArray = NSMutableArray() as! [NSDictionary]
-    let WC = WalletOfCards()
+    var WC : WalletOfCards? = nil
     @IBOutlet weak var wallet: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,9 +36,10 @@ class ViewController: UIViewController, WalletDelegate {
         cardsArray.append(card1 as NSDictionary)
         cardsArray.append(card2 as NSDictionary)
         cardsArray.append(card3 as NSDictionary)
-        WC.delegate = self
-        WC.destitaionController = "testView"
-        WC.createWallet()
+        WC = WalletOfCards(delegate: self)
+        WC!.dataSource = self
+        WC!.destitaionController = "testView"
+        WC!.createWallet()
     }
     
     func setViewFromWallet() -> UIView {

@@ -22,11 +22,14 @@ class WalletOfCards{
     public let heightCardSaved = 80
     public let heightReal = 230
     private var myCustomView: CardDetailViewController?
-    public var delegate: ViewController?
+    public var dataSource: UIViewController!
+    private weak var delegate : WalletDelegate?
     private var afterPosition = NSInteger()
     public var destitaionController = NSString()
     private var currentCard = UIView()
-    init(){
+    
+    init(delegate : WalletDelegate){
+        self.delegate = delegate
         self.destitaionController = ""
     }
     
@@ -123,7 +126,7 @@ class WalletOfCards{
             self.delegate?.setViewFromWallet().bringSubviewToFront(cardSelected!)
             UIView.animate(withDuration: 1, animations: {
                 for view in (self.delegate?.setViewFromWallet().subviews)!{
-                    if view.tag != sender.tag{
+                    if view.tag != sender.tag + 1{
                         view.frame = CGRect(x: (Int(view.frame.width) / 2) - ((Int(view.frame.width) - (self.padding * 2)) / 2), y: self.afterPosition * 2, width: Int(view.frame.width) - (self.padding * 2), height: self.heightReal)
                     }
                 }
@@ -140,13 +143,13 @@ class WalletOfCards{
                             cardSelected?.alpha = 1.0
                             cardSelected?.alpha = 0.0
                         }else{
-                            let controller = self.delegate?.storyboard!.instantiateViewController(withIdentifier: self.destitaionController as String)
-                            self.delegate?.addChild(controller!)
-                            controller!.didMove(toParent: self.delegate!)
-                            controller!.view.frame = CGRect(x: 0, y: 0, width: (cardSelected?.frame.width)!, height: (cardSelected?.frame.height)!)
-                            controller!.view.alpha = 0.0
-                            cardSelected?.addSubview(controller!.view)
-                            controller!.view.alpha = 1.0
+                            let controller = self.dataSource.storyboard!.instantiateViewController(withIdentifier: self.destitaionController as String)
+                            self.dataSource.addChild(controller)
+                            controller.didMove(toParent: self.dataSource)
+                            controller.view.frame = CGRect(x: 0, y: 0, width: (cardSelected?.frame.width)!, height: (cardSelected?.frame.height)!)
+                            controller.view.alpha = 0.0
+                            self.dataSource.view.addSubview(controller.view)
+                            controller.view.alpha = 1.0
                         }
                     }, completion: nil)
                 })
