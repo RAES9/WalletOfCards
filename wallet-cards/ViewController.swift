@@ -33,9 +33,16 @@ class ViewController: UIViewController, WalletDelegate{
             "ammount" : "$5,000.00",
             "name" : "TARJETA (789)"
         ] as [String : Any]
+        let card4 = [
+            "color" : UIColor.gray,
+            "title" : "DISPONIBLE",
+            "ammount" : "$8,500.00",
+            "name" : "TARJETA (321)"
+        ] as [String : Any]
         cardsArray.append(card1 as NSDictionary)
         cardsArray.append(card2 as NSDictionary)
         cardsArray.append(card3 as NSDictionary)
+        cardsArray.append(card4 as NSDictionary)
         WC = WalletOfCards(delegate: self)
         WC!.dataSource = self
         WC!.destitaionController = "testView"

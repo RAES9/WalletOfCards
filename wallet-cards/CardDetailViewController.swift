@@ -18,10 +18,15 @@ class CardDetailViewController: UIViewController{
     }
     
     @IBAction func ac(_ sender: Any) {
-        print("button action")
-        let controller = self.storyboard!.instantiateViewController(withIdentifier: "ViewController" as String)
-        self.addChild(controller)
-        controller.didMove(toParent: self)
-        self.view.addSubview(controller.view)
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.alpha = 1.0
+            self.view.alpha = 0.0
+        }, completion: {finish in
+            let controller = self.storyboard!.instantiateViewController(withIdentifier: "ViewController" as String)
+            self.addChild(controller)
+            controller.didMove(toParent: self)
+            self.view.addSubview(controller.view)
+            self.view.alpha = 1.0
+        })
     }
 }

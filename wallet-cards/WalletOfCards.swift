@@ -92,14 +92,14 @@ class WalletOfCards{
         afterPosition = afterPosition + (heightCardSaved * counter)
     }
     
-    func saveCurrentCard(){
+    func saveCurrentCard(view : UIView){
         UIView.animate(withDuration: 0.5, animations: {
-            for view in self.currentCard.subviews{
+            for view in view.subviews{
                 view.alpha = 1.0
             }
-            self.currentCard.layer.cornerRadius = (self.currentCard.frame.size.width / 3) / 2
-            self.currentCard.frame = CGRect(x: ((self.delegate?.setViewFromWallet().frame.width)! / 2) - ((self.currentCard.frame.size.width / 3) / 2), y: 0 - (UIScreen.main.bounds.height - (self.delegate?.setViewFromWallet().frame.height)!), width: self.currentCard.frame.size.width / 3, height: self.currentCard.frame.size.width / 3)
-            for view in self.currentCard.subviews{
+            view.layer.cornerRadius = (view.frame.size.width / 3) / 2
+            view.frame = CGRect(x: ((self.delegate?.setViewFromWallet().frame.width)! / 2) - ((self.currentCard.frame.size.width / 3) / 2), y: 0 - (UIScreen.main.bounds.height - (self.delegate?.setViewFromWallet().frame.height)!), width: self.currentCard.frame.size.width / 3, height: self.currentCard.frame.size.width / 3)
+            for view in view.subviews{
                 view.alpha = 0.0
             }
         })
@@ -150,6 +150,8 @@ class WalletOfCards{
                             controller.view.alpha = 0.0
                             self.dataSource.view.addSubview(controller.view)
                             controller.view.alpha = 1.0
+                            cardSelected?.alpha = 1.0
+                            cardSelected?.alpha = 0.0
                         }
                     }, completion: nil)
                 })
